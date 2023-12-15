@@ -1,6 +1,5 @@
 package com.pluralsight;
 
-import java.rmi.dgc.Lease;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,7 +7,6 @@ import java.util.Date;
 import java.util.Scanner;
 
 import static com.pluralsight.Contract.contractList;
-import static com.pluralsight.MainApp.*;
 import static com.pluralsight.Dealership.*;
 
 
