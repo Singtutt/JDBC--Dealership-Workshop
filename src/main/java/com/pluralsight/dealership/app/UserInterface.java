@@ -1,4 +1,8 @@
-package com.pluralsight.dealership;
+package com.pluralsight.dealership.app;
+
+import com.pluralsight.dealership.contract.LeaseContract;
+import com.pluralsight.dealership.contract.SalesContract;
+import com.pluralsight.dealership.model.Vehicle;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -6,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-import static com.pluralsight.dealership.Contract.contractList;
-import static com.pluralsight.dealership.Dealership.*;
+import static com.pluralsight.dealership.contract.Contract.contractList;
+import static com.pluralsight.dealership.model.Dealership.*;
 
 
 public class UserInterface {

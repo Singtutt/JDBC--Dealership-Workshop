@@ -1,4 +1,4 @@
-package com.pluralsight.dealership;
+package com.pluralsight.dealership.model;
 
 public class Vehicle {
     public double price;
