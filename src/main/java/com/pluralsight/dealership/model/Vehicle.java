@@ -3,10 +3,10 @@ package com.pluralsight.dealership.model;
 public class Vehicle {
     public double price;
     public boolean available;
-    public int vin, year, odometer;
-    public String make, model, vehicleType, color;
+    public int year, odometer;
+    public String vin, make, model, vehicleType, color;
 
-    public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
+    public Vehicle(String vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
         this.price = price;
         this.vin = vin;
         this.year = year;
@@ -22,7 +22,7 @@ public class Vehicle {
         return price;
     }
 
-    public int getVin() {
+    public String getVin() {
         return vin;
     }
 

@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import static com.pluralsight.dealership.contract.Contract.contractList;
+import static com.pluralsight.dealership.dao.VehicleDAO.*;
 import static com.pluralsight.dealership.model.Dealership.*;
 
 
@@ -69,10 +70,6 @@ public class UserInterface {
         }
     }
 
-    public static void initialize(){
-        //newDealership = getDealership();
-    }
-
     public static void processGetVehiclesByPriceRequest(){
         try{
             System.out.print("\nPlease enter the minimum price for your search: $");
@@ -80,7 +77,7 @@ public class UserInterface {
             System.out.print("\nPlease enter the maximum price for your search: $");
             double maxPrice = input.nextDouble();
             System.out.println("\nList of All Vehicles between $" + df.format(minPrice) + " - $" + df.format(maxPrice) + ":");
-            displayVehicles(getVehiclesByPrice(minPrice, maxPrice));
+            displayVehicles(sortByPrice(minPrice, maxPrice));
             System.out.println("\nReturning to the main menu...\n");
             display();
         }
@@ -97,7 +94,7 @@ public class UserInterface {
             System.out.print("\nPlease enter the vehicle model for your search: ");
             String model = input.nextLine();
             System.out.println("\nList of All " + make + " " + model + "s:");
-            displayVehicles(getVehiclesByMakeModel(make, model));
+            displayVehicles(sortByMakeModel(make, model));
             System.out.println("\nReturning to the main menu...\n");
             display();
         }
@@ -114,7 +111,7 @@ public class UserInterface {
             System.out.print("\nPlease enter the maximum year for your search: ");
             int maxYear = input.nextInt();
             System.out.println("\nList of All Vehicles between " + minYear + " - " + maxYear + ":");
-            displayVehicles(getVehiclesByYear(minYear, maxYear));
+            displayVehicles(sortByYear(minYear, maxYear));
             System.out.println("\nReturning to the main menu...\n");
             display();
         }
@@ -129,7 +126,7 @@ public class UserInterface {
             System.out.print("\nPlease enter the vehicle color for your search: ");
             String color = input.nextLine();
             System.out.println("\nList of All " + color + " vehicles:");
-            displayVehicles(getVehiclesByColor(color));
+            displayVehicles(sortByColor(color));
             System.out.println("\nReturning to the main menu...\n");
             display();
         }
@@ -146,7 +143,7 @@ public class UserInterface {
             System.out.print("\nPlease enter the maximum mileage for your search: ");
             int maxMileage = input.nextInt();
             System.out.println("\nList of All Vehicles with mileage between " + minMileage + " - " + maxMileage + ":");
-            displayVehicles(getVehiclesByMileage(minMileage, maxMileage));
+            displayVehicles(sortByMileage(minMileage, maxMileage));
             System.out.println("\nReturning to the main menu...\n");
             display();
         }
@@ -161,7 +158,7 @@ public class UserInterface {
             System.out.print("\nPlease enter the vehicle type for your search: ");
             String vehicleType = input.nextLine();
             System.out.println("\nList of All " + vehicleType + " vehicles:");
-            displayVehicles(getVehiclesByType(vehicleType));
+            displayVehicles(sortByType(vehicleType));
             System.out.println("\nReturning to the main menu...\n");
             display();
         }
@@ -173,7 +170,7 @@ public class UserInterface {
 
     public static void processGetAllVehiclesRequest(){
         System.out.println("\nList of All Vehicles: ");
-        displayVehicles(getAllVehicles());
+        displayVehicles(allVehicles());
         System.out.println("\nReturning to the main menu...\n");
         display();
     }
@@ -182,7 +179,7 @@ public class UserInterface {
         try{
             System.out.println("\nVehicle Addition Form:");
             System.out.print("Please enter the VIM of the new vehicle(Ex: 12345): ");
-            int newVim = input.nextInt();
+            String newVin = input.nextLine();
             System.out.print("\nPlease enter the year of the new vehicle(Ex: 2003): ");
             int newYear = input.nextInt();
             System.out.print("\nPlease enter the make of the new vehicle(Ex: Ford): ");
@@ -198,8 +195,7 @@ public class UserInterface {
             int newOdometer = input.nextInt();
             System.out.print("\nPlease enter the price of the new vehicle(Ex: $10000): $");
             double newPrice = input.nextDouble();
-            Vehicle newVehicle = new Vehicle(newVim, newYear, newMake, newModel, newVehicleType, newColor, newOdometer, newPrice);
-            addVehicle(newVehicle);
+            addNewVehicle(newVin, newMake, newModel, newYear, newVehicleType, newColor, newOdometer, newPrice);
             System.out.println("\nYour new vehicle has been successfully added!\n\nReturning to main menu...\n");
             display();
 
@@ -212,12 +208,12 @@ public class UserInterface {
 
     public static void processRemoveVehicleRequest(){
         try{
+            ArrayList<Vehicle> tempVehicleList = allVehicles();
             System.out.println("\nAll removable vehicles: ");
-            displayVehicles(inventory);
+            displayVehicles(tempVehicleList);
             System.out.print("\nPlease enter the number of the vehicle you would like to remove (Ex: 2): ");
             int removeInput = input.nextInt();
-            inventory.remove(removeInput-1);
-            //saveDealership();
+            removeVehicle(tempVehicleList.get(removeInput-1).getVin());
             System.out.println("\nYour new vehicle has been successfully removed!\n\nReturning to main menu...\n");
             display();
         }
@@ -235,7 +231,7 @@ public class UserInterface {
             System.out.print("Please enter your email (Ex. johnsmithcars@gmail.com): ");
             String chosenEmail = input.nextLine();
             System.out.print("Please enter the VIN of the vehicle you would like to begin a contract with (Ex. 12345): ");
-            int chosenVin = input.nextInt();
+            String chosenVin = input.nextLine();
             input.nextLine();
             String chosenDate = dateFormatter.format(today);
             SalesContract newSalesContract = new SalesContract(chosenDate, chosenName, chosenEmail, getVehicleByVin(chosenVin), false);
@@ -300,7 +296,7 @@ public class UserInterface {
             System.out.print("Please enter your email (Ex. johnsmithcars@gmail.com): ");
             String chosenEmail = input.nextLine();
             System.out.print("Please enter the VIN of the vehicle you would like to begin a contract with (Ex. 12345): ");
-            int chosenVin = input.nextInt();
+            String chosenVin = input.nextLine();
             input.nextLine();
             String chosenDate = dateFormatter.format(today);
             LeaseContract newLeaseContract = new LeaseContract(chosenDate, chosenName, chosenEmail, getVehicleByVin(chosenVin));
