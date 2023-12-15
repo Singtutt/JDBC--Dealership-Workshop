@@ -3,7 +3,7 @@ package com.pluralsight;
 import static com.pluralsight.UserInterface.df;
 
 public class SalesContract extends Contract{
-    double salesTax, recordingFee = 100, processingFee = 295;
+    double salesTax, recordingFee, processingFee = 295;
     boolean isFinanced;
 
     public SalesContract(String date, String name, String email, Vehicle vehicleSold, boolean isFinanced) {
@@ -14,6 +14,10 @@ public class SalesContract extends Contract{
         if(vehicleSold.getPrice() > 10000){
             this.processingFee = 495;
         }
+    }
+
+    public void setFinanced(boolean financed) {
+        isFinanced = financed;
     }
 
     @Override
@@ -35,35 +39,4 @@ public class SalesContract extends Contract{
         return Double.parseDouble(df.format(monthlyPayment));
     }
 
-    public double getSalesTax() {
-        return salesTax;
-    }
-
-    public void setSalesTax(double salesTax) {
-        this.salesTax = salesTax;
-    }
-
-    public double getRecordingFee() {
-        return recordingFee;
-    }
-
-    public void setRecordingFee(double recordingFee) {
-        this.recordingFee = recordingFee;
-    }
-
-    public double getProcessingFee() {
-        return processingFee;
-    }
-
-    public void setProcessingFee(double processingFee) {
-        this.processingFee = processingFee;
-    }
-
-    public boolean isFinanced() {
-        return isFinanced;
-    }
-
-    public void setFinanced(boolean financed) {
-        isFinanced = financed;
-    }
 }
