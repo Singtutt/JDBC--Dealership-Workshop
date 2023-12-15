@@ -1,4 +1,6 @@
-package com.pluralsight.dealership;
+package com.pluralsight.dealership.contract;
+
+import com.pluralsight.dealership.model.Vehicle;
 
 import java.util.ArrayList;
 

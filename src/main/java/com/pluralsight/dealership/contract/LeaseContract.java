@@ -1,6 +1,8 @@
-package com.pluralsight.dealership;
+package com.pluralsight.dealership.contract;
 
-import static com.pluralsight.dealership.UserInterface.df;
+import com.pluralsight.dealership.model.Vehicle;
+
+import static com.pluralsight.dealership.app.UserInterface.df;
 
 public class LeaseContract extends Contract {
     double expectedEndValue, leaseFee;
