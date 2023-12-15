@@ -20,20 +20,4 @@ public class LeaseContract extends Contract{
     public double getMonthlyPayment(){
         return Double.parseDouble(df.format((getTotalPrice() * 1.04) / 36));
     }
-
-    public double getExpectedEndValue() {
-        return expectedEndValue;
-    }
-
-    public void setExpectedEndValue(double expectedEndValue) {
-        this.expectedEndValue = expectedEndValue;
-    }
-
-    public double getLeaseFee() {
-        return leaseFee;
-    }
-
-    public void setLeaseFee(double leaseFee) {
-        this.leaseFee = leaseFee;
-    }
 }
