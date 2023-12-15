@@ -1,8 +1,8 @@
-package com.pluralsight;
+package com.pluralsight.dealership;
 
-import static com.pluralsight.UserInterface.df;
+import static com.pluralsight.dealership.UserInterface.df;
 
-public class SalesContract extends Contract{
+public class SalesContract extends Contract {
     double salesTax, recordingFee, processingFee = 295;
     boolean isFinanced;
 

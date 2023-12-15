@@ -1,4 +1,4 @@
-package com.pluralsight;
+package com.pluralsight.dealership;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-import static com.pluralsight.Contract.contractList;
-import static com.pluralsight.Dealership.*;
+import static com.pluralsight.dealership.Contract.contractList;
+import static com.pluralsight.dealership.Dealership.*;
 
 
 public class UserInterface {

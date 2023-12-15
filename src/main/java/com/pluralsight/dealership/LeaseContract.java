@@ -1,8 +1,8 @@
-package com.pluralsight;
+package com.pluralsight.dealership;
 
-import static com.pluralsight.UserInterface.df;
+import static com.pluralsight.dealership.UserInterface.df;
 
-public class LeaseContract extends Contract{
+public class LeaseContract extends Contract {
     double expectedEndValue, leaseFee;
 
     public LeaseContract(String date, String name, String email, Vehicle vehicleSold) {

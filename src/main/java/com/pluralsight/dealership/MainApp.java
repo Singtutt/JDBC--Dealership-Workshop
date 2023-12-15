@@ -1,6 +1,6 @@
-package com.pluralsight;
+package com.pluralsight.dealership;
 
-import static com.pluralsight.UserInterface.*;
+import static com.pluralsight.dealership.UserInterface.*;
 
 public class MainApp {
     public static Dealership newDealership;
