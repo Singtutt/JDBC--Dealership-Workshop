@@ -12,8 +12,8 @@ public class Dealership {
         this.phone = phone;
     }
 
-    public static Vehicle getVehicleByVin(int vin){
-        Vehicle newVehicle = new Vehicle(0, 0, "null", "null", "null", "null", 0, 0);
+    public static Vehicle getVehicleByVin(String vin){
+        Vehicle newVehicle = new Vehicle("", 0, "null", "null", "null", "null", 0, 0);
         for(Vehicle vehicle: inventory){
             if(vehicle.getVin() == vin){
                 newVehicle = vehicle;
