@@ -1,60 +1,26 @@
 package com.pluralsight.dealership.model;
 
-public class Vehicle {
-    public double price;
-    public boolean available;
-    public int year, odometer;
-    public String vin, make, model, vehicleType, color;
+public record Vehicle(String vin, int year, String make, String model, String vehicleType, String color, int odometer,
+                      double price, boolean sold) {
 
-    public Vehicle(String vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
-        this.price = price;
-        this.vin = vin;
-        this.year = year;
-        this.odometer = odometer;
-        this.make = make;
-        this.model = model;
-        this.vehicleType = vehicleType;
-        this.color = color;
-        this.available = true;
+    @Override
+    public String toString() {
+        return String.format("| %-22s | %-5s | %-15s | %-15s | %-15s | %-10s | %-10s | %-15s |%n",
+                vin, year, make, model, vehicleType, color, price, sold);
     }
 
-    public double getPrice() {
-        return price;
+    @Override
+    public boolean equals(Object instance) {
+        if (this == instance)
+            return true;
+        if (instance == null || getClass() != instance.getClass())
+            return false;
+        Vehicle vehicle = (Vehicle) instance;
+        return vin.equals(vehicle.vin);
     }
 
-    public String getVin() {
-        return vin;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public int getOdometer() {
-        return odometer;
-    }
-
-    public String getMake() {
-        return make;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public String getVehicleType() {
-        return vehicleType;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
+    @Override
+    public int hashCode() {
+        return vin.hashCode();
     }
 }

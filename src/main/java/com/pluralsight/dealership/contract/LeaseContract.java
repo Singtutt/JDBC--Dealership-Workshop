@@ -2,15 +2,15 @@ package com.pluralsight.dealership.contract;
 
 import com.pluralsight.dealership.model.Vehicle;
 
-import static com.pluralsight.dealership.app.UserInterface.df;
+import static com.pluralsight.dealership.app.ui.UserInterface.df;
 
 public class LeaseContract extends Contract {
     double expectedEndValue, leaseFee;
 
     public LeaseContract(String date, String name, String email, Vehicle vehicleSold) {
         super(date, name, email, vehicleSold);
-        this.expectedEndValue = vehicleSold.getPrice() * .5;
-        this.leaseFee = vehicleSold.getPrice() * .07;
+        this.expectedEndValue = vehicleSold.price() * .5;
+        this.leaseFee = vehicleSold.price() * .07;
     }
 
     @Override
