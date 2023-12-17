@@ -5,8 +5,8 @@ public record Vehicle(String vin, int year, String make, String model, String ve
 
     @Override
     public String toString() {
-        return String.format("| %-22s | %-5s | %-15s | %-15s | %-15s | %-10s | %-10s | %-15s |%n",
-                vin, year, make, model, vehicleType, color, price, sold);
+        return String.format("| %-20s | %-5d | %-15s | %-15s | %-15s | %-10s | %-10d | %-15.2f | %-5s |%n",
+                vin, year, make, model, vehicleType, color, odometer, price, sold);
     }
 
     @Override
