@@ -1,66 +1,59 @@
 package com.pluralsight.dealership.dao;
 
-import com.pluralsight.dealership.app.ui.UserInterface;
 import com.pluralsight.dealership.dao.connect.DataConnect;
 import com.pluralsight.dealership.model.Vehicle;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class VehicleDAO {
 //    private static final UserInterface ui = new UserInterface();
 
-    public static ArrayList<Vehicle> byPrice(int lowest, int highest) {
+    public static List<Vehicle> byPrice(int lowest, int highest) {
         return sortBy("v.price > ? AND v.price < ?", String.valueOf(lowest), String.valueOf(highest));
     }
 
-    public static ArrayList<Vehicle> byMakeModel(String make, String model) {
+    public static List<Vehicle> byMakeModel(String make, String model) {
         return sortBy("v.make = ? AND v.model = ?", make, model);
     }
 
-    public static ArrayList<Vehicle> byYear(int lowest, int highest) {
+    public static List<Vehicle> byYear(int lowest, int highest) {
         return sortBy("v.year >= ? AND v.year <= ?", String.valueOf(lowest), String.valueOf(highest));
     }
 
-    public static ArrayList<Vehicle> byColor(String color) {
+    public static List<Vehicle> byColor(String color) {
         return sortBy("v.color = ?", color);
     }
 
-    public static ArrayList<Vehicle> byMileage(int lowest, int highest) {
+    public static List<Vehicle> byMileage(int lowest, int highest) {
         return sortBy("v.mileage >= ? ANd v.mileage <= ?", String.valueOf(lowest), String.valueOf(highest));
     }
 
-    public static ArrayList<Vehicle> byType(String type) {
+    public static List<Vehicle> byType(String type) {
         return sortBy("v.type = ?", type);
     }
 
-    private static ArrayList<Vehicle> allVehicles() {
+    private static List<Vehicle> allVehicles() {
         return sortBy("1 = 1");
     }
 
-    public static void addNewVehicles(String vin, String make, String model, int year, String type, String color, int mileage, double price) {
+    public void addNewVehicle(Vehicle vehicle) {
         String query = """
                 INSERT INTO vehicles (VIN, Make, Model, Year, Type, Color, Mileage, Price)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)""";
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """;
         try (Connection conn = DataConnect.getConnection();
              PreparedStatement prep = conn.prepareStatement(query)) {
-            prep.setString(1, vin);
-            prep.setString(2, make);
-            prep.setString(3, model);
-            prep.setInt(4, year);
-            prep.setString(5, type);
-            prep.setString(6, color);
-            prep.setInt(7, mileage);
-            prep.setDouble(8, price);
+            vehiclePreparedStatement(prep, vehicle);
             prep.executeUpdate();
             System.out.println("SUCCESS");
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("UPDATE ERROR");
+            sqlErrorHandling(e, "ENTRY | INSERT ERROR");
         }
     }
 
-    public static void removeVehicle(String vin) {
+    public void removeVehicle(String vin) {
         String query = """
                 DELETE FROM vehicles
                 WHERE VIN = ?""";
@@ -70,14 +63,12 @@ public class VehicleDAO {
             prep.executeUpdate();
             System.out.println("SUCCESS");
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("UPDATE ERROR");
+            sqlErrorHandling(e, "ENTRY | DELETE ERROR");
         }
-
     }
 
-    private static ArrayList<Vehicle> sortBy(String condition, String... parameters) {
-        ArrayList<Vehicle> sortedVehicles = new ArrayList<>();
+    private static List<Vehicle> sortBy(String condition, String... properties) {
+        List<Vehicle> sortedVehicles = new ArrayList<>();
         String query = """
                                SELECT *
                                FROM vehicles v
@@ -85,37 +76,65 @@ public class VehicleDAO {
                                """ + condition;
         try (Connection conn = DataConnect.getConnection();
              PreparedStatement prep = conn.prepareStatement(query)) {
-            int temp = 1;
-            for (String instance : parameters) {
-                prep.setString(temp++, instance);
-            }
+            setProperties(prep, properties);
             try (ResultSet rs = prep.executeQuery()) {
                 while (rs.next()) {
-                    Vehicle newVehicle = new Vehicle(
-                            rs.getString("VIN"),
-                            rs.getInt("Year"),
-                            rs.getString("Make"),
-                            rs.getString("Model"),
-                            rs.getString("Type"),
-                            rs.getString("Color"),
-                            rs.getInt("Mileage"),
-                            rs.getDouble("Price"),
-                            rs.getBoolean("Sold")
-                    );
+                    Vehicle newVehicle = vehicleResultSet(rs);
                     sortedVehicles.add(newVehicle);
                 }
                 return sortedVehicles;
-            } catch (Exception sortError) {
-                sortError.printStackTrace();
-                System.out.println("SORT ERROR");
-                return null;
+            } catch (SQLException e) {
+                sqlErrorHandling(e, "ENTRY | FILTER ERROR");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            sqlErrorHandling(e);
+        }
+        return sortedVehicles;
+    }
+
+    private static void vehiclePreparedStatement(PreparedStatement prep, Vehicle vehicle) throws SQLException {
+        prep.setString(1, vehicle.vin());
+        prep.setString(2, vehicle.make());
+        prep.setString(3, vehicle.model());
+        prep.setInt(4, vehicle.year());
+        prep.setString(5, vehicle.vehicleType());
+        prep.setString(6, vehicle.color());
+        prep.setInt(7, vehicle.odometer());
+        prep.setDouble(8, vehicle.price());
+    }
+
+    private static Vehicle vehicleResultSet(ResultSet rs) throws SQLException {
+        return new Vehicle(
+                rs.getString("VIN"),
+                rs.getInt("Year"),
+                rs.getString("Make"),
+                rs.getString("Model"),
+                rs.getString("Type"),
+                rs.getString("Color"),
+                rs.getInt("Mileage"),
+                rs.getDouble("Price"),
+                rs.getBoolean("Sold")
+        );
+    }
+
+    private static void setProperties(PreparedStatement prep, String[] properties) throws SQLException {
+        for (int i = 0; i < properties.length; i++) {
+            prep.setString(i + 1, properties[i]);
         }
     }
+
+    private static void sqlErrorHandling(SQLException e) {
+        e.printStackTrace();
+        throw new RuntimeException(e);
+    }
+
+    private static void sqlErrorHandling(SQLException e, String display) {
+        e.printStackTrace();
+        System.out.println(display);
+    }
 }
+
+
 //    private static ArrayList<Vehicle> sortBy(String q, Object... arrays) {
 //        ArrayList<Vehicle> sortedVehicles = new ArrayList<>();
 //        try (Connection conn = DataConnect.getConnection();
@@ -199,13 +218,6 @@ public class VehicleDAO {
 //                 ResultSet rs = preparedStatement.executeQuery()) {
 //                while (rs.next()) {
 //                    Vehicle newVehicle = new Vehicle(rs.getString("VIN"),
-//                            rs.getInt("Year"),
-//                            rs.getString("Make"),
-//                            rs.getString("Model"),
-//                            rs.getString("Type"),
-//                            rs.getString("Color"),
-//                            rs.getInt("Mileage"),
-//                            rs.getDouble("Price"));
 //                    makeModelSortedVehicles.add(newVehicle);
 //                }
 //                return makeModelSortedVehicles;
