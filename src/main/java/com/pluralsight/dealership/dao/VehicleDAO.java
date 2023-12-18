@@ -106,9 +106,7 @@ public class VehicleDAO {
     private static Vehicle vehicleResultSet(ResultSet rs) throws SQLException {
         return new Vehicle(
                 rs.getString("VIN"),
-                rs.getInt("Year"),
-                rs.getString("Make"),
-                rs.getString("Model"),
+                rs.getString("Make"), rs.getString("Model"), rs.getInt("Year"),
                 rs.getString("Type"),
                 rs.getString("Color"),
                 rs.getInt("Mileage"),
