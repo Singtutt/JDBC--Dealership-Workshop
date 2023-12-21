@@ -1,16 +1,22 @@
 package com.pluralsight.dealership.model.contract;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 public abstract class BaseContract {
     protected int id;
-    protected Date date;
+    protected Timestamp date;
     protected String name, email, vehicleVIN;
     protected double totalPrice, monthlyPrice;
-    protected static final DecimalFormat df = new DecimalFormat("#.##");
+    protected static final DecimalFormat decimalF = new DecimalFormat("#.##");
+    protected String formatD(Timestamp ts) {
+        SimpleDateFormat dateF= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateF.format(ts);
+    }
 
-    public BaseContract(int id, Date date, String name, String email, String vin, double totalPrice, double monthlyPrice) {
+    public BaseContract(int id, Timestamp date, String name, String email, String vin, double totalPrice, double monthlyPrice) {
         this.id = id;
         this.date = date;
         this.name = name;
@@ -52,11 +58,11 @@ public abstract class BaseContract {
         this.vehicleVIN = vehicleVIN;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -72,4 +78,3 @@ public abstract class BaseContract {
 
     public abstract double getMonthlyPrice();
 }
-//    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Minor adjustment needed to format date.
