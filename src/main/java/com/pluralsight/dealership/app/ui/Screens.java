@@ -97,8 +97,10 @@ public class Screens {
                 Display Contracts:
                                 
                 Please enter a menu option (0-2):
-                \t1. Sales Contracts
-                \t2. Lease Contracts
+                \t1. All Sales Contracts
+                \t2. All Lease Contracts
+                \t3. Lease Contract Entry
+                \t4. Sales Contract Entry
                 \t0. Return to Sales Management
                             
                 User Input:\s""");
@@ -129,7 +131,6 @@ public class Screens {
                 break;
         }
     }
-
     public static void vehicleMenuFlow() {
         inventoryMenuDisplay();
         String option = input.nextLine();
@@ -151,7 +152,6 @@ public class Screens {
                 break;
         }
     }
-
     public static void salesMenuFlow() {
         salesMenuDisplay();
         String option = input.nextLine();
@@ -170,16 +170,21 @@ public class Screens {
                 salesMenuFlow();
         }
     }
-
     private static void contractViewMenuFlow() {
         contractViewMenuDisplay();
         String option = input.nextLine();
         switch (option) {
             case "1":
-                // Will pull from Database (SalesContractDAO)-Fix
+                // needs implimentation
                 break;
             case "2":
-                // Will pull from database (LeaseContractDAO)-Fix
+                // needs implimentation
+                break;
+            case "3":
+                // needs implimentation
+                break;
+            case "4":
+                // needs implimenation
                 break;
             case "0":
                 salesMenuFlow();
