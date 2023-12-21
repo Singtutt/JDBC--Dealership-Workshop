@@ -1,119 +1,74 @@
 package com.pluralsight.dealership.model.contract;
 
 import java.sql.*;
-import java.text.DecimalFormat;
 
-public class SalesContract extends baseContract {
-    private int id;
-    private Date date;
-    private String name, email, vehicleVIN;
-    private double totalPrice, monthlyPrice;
-    private boolean financed, Sold;
-    private static final DecimalFormat df = new DecimalFormat("#.##");
+public class SalesContract extends BaseContract {
+    double salesTax, recordingFee = 100, processingFee = 295;
+    boolean isFinanced;
 
-    public SalesContract(int id, Date date, String name, String email, String vin, double totalPrice, double monthlyPrice, int saleID, Date date1, String name1, String email1, String vehicleVIN, double totalPrice1, double monthlyPrice1, boolean financed, boolean sold) {
+    public SalesContract(int id, Date date, String name, String email, String vin, double totalPrice, double monthlyPrice, boolean isFinanced) {
         super(id, date, name, email, vin, totalPrice, monthlyPrice);
-        this.id = saleID;
-        this.date = date1;
-        this.name = name1;
-        this.email = email1;
-        this.vehicleVIN = vehicleVIN;
-        this.totalPrice = totalPrice1;
-        this.monthlyPrice = monthlyPrice1;
-        this.financed = financed;
-        Sold = sold;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getVehicleVIN() {
-        return vehicleVIN;
-    }
-
-    public void setVehicleVIN(String vehicleVIN) {
-        this.vehicleVIN = vehicleVIN;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public double getMonthlyPrice() {
-        return monthlyPrice;
-    }
-
-    public void setMonthlyPrice(double monthlyPrice) {
-        this.monthlyPrice = monthlyPrice;
-    }
-
-    public boolean isFinanced() {
-        return financed;
-    }
-
-    public void setFinanced(boolean financed) {
-        this.financed = financed;
-    }
-
-    public boolean isSold() {
-        return Sold;
-    }
-
-    public void setSold(boolean sold) {
-        Sold = sold;
+        this.salesTax = totalPrice * .05;
+        this.isFinanced = isFinanced;
+        if(totalPrice > 10000){
+            this.processingFee = 495;
+        }
     }
 
     @Override
-    public double getTotalPrice() {
-        double salesTax = totalPrice * 0.05;
-        double recordingFee = 100;
-        double processingFee = (totalPrice > 10000) ? 495 : 295;
-        return Double.parseDouble(df.format((totalPrice + salesTax + recordingFee + processingFee)));
+    public double getTotalPrice(){
+        return Double.parseDouble(df.format((this.totalPrice + salesTax + recordingFee + processingFee)));
     }
+
     @Override
-    public double getMonthlyPayment() {
+    public double getMonthlyPrice(){
         double monthlyPayment = 0;
-        if (financed) {
-            if (getTotalPrice() > 10000) {
+        if(isFinanced){
+            if(getTotalPrice() > 10000){
                 monthlyPayment = (getTotalPrice() * 1.0425) / 48;
-            } else {
+            }
+            else{
                 monthlyPayment = (getTotalPrice() * 1.0525) / 24;
             }
         }
         return Double.parseDouble(df.format(monthlyPayment));
     }
+
+    public double getSalesTax() {
+        return salesTax;
+    }
+
+    public void setSalesTax(double salesTax) {
+        this.salesTax = salesTax;
+    }
+
+    public double getRecordingFee() {
+        return recordingFee;
+    }
+
+    public void setRecordingFee(double recordingFee) {
+        this.recordingFee = recordingFee;
+    }
+
+    public double getProcessingFee() {
+        return processingFee;
+    }
+
+    public void setProcessingFee(double processingFee) {
+        this.processingFee = processingFee;
+    }
+
+    public boolean isFinanced() {
+        return isFinanced;
+    }
+
+    public void setFinanced(boolean financed) {
+        isFinanced = financed;
+    }
 }
-//    private double salesTax, recordingFee, processingFee = 295;
-//    private double vehicleCost;
+
+
+
 
 //    private void fetchDBCost(String vehicleVIN) {
 //        try {
