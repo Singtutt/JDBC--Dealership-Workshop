@@ -1,73 +1,42 @@
 package com.pluralsight.dealership.model.contract;
 
-import java.text.DecimalFormat;
-import java.util.Date;
+import java.sql.Date;
 
-public class LeaseContract {
-    private int leaseID;
-    private String name, email, vin;
-    private double totalPrice, monthlyPrice, expectedEndValue, leaseFee;
-    private static final DecimalFormat df = new DecimalFormat("#.##");
+public class LeaseContract extends BaseContract {
+    private double expectedEndValue, leaseFee;
 
-    public LeaseContract(int leaseID, Date date, String name, String email, String vin, double totalPrice, double monthlyPrice) {
-        this.leaseID = leaseID;
-        this.name = name;
-        this.email = email;
-        this.vin = vin;
-        this.totalPrice = totalPrice;
-        this.monthlyPrice = monthlyPrice;
+    public LeaseContract(int id, Date date, String name, String email, String vin, double totalPrice, double monthlyPrice) {
+        super(id, date, name, email, vin, totalPrice, monthlyPrice);
         this.expectedEndValue = totalPrice * 0.5;
         this.leaseFee = totalPrice * 0.07;
     }
 
-    public int getLeaseID() {
-        return leaseID;
+    public double getExpectedEndValue() {
+        return expectedEndValue;
     }
 
-    public void setLeaseID(int leaseID) {
-        this.leaseID = leaseID;
+    public void setExpectedEndValue(double expectedEndValue) {
+        this.expectedEndValue = expectedEndValue;
     }
 
-    public String getName() {
-        return name;
+    public double getLeaseFee() {
+        return leaseFee;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLeaseFee(double leaseFee) {
+        this.leaseFee = leaseFee;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getVin() {
-        return vin;
-    }
-
-    public void setVin(String vin) {
-        this.vin = vin;
-    }
-
-    public double getTotalPrice() {
-        return Double.parseDouble(df.format(expectedEndValue + leaseFee));
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
+    @Override
     public double getMonthlyPrice() {
         return Double.parseDouble(df.format((getTotalPrice() * 1.04) / 36));
     }
-
-    public void setMonthlyPrice(double monthlyPrice) {
-        this.monthlyPrice = monthlyPrice;
+    @Override
+    public double getTotalPrice() {
+        return Double.parseDouble(df.format(expectedEndValue + leaseFee));
     }
 }
+
 //    public double getExpectedEndValue() {
 //        return expectedEndValue;
 //    }

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleDAO {
-//    private static final UserInterface ui = new UserInterface();
-
     public static List<Vehicle> byPrice(int lowest, int highest) {
         return sortBy("v.price > ? AND v.price < ?", String.valueOf(lowest), String.valueOf(highest));
     }
@@ -93,22 +91,24 @@ public class VehicleDAO {
     }
 
     private static void vehiclePreparedStatement(PreparedStatement prep, Vehicle vehicle) throws SQLException {
-        prep.setString(1, vehicle.vin());
-        prep.setString(2, vehicle.make());
-        prep.setString(3, vehicle.model());
-        prep.setInt(4, vehicle.year());
-        prep.setString(5, vehicle.vehicleType());
-        prep.setString(6, vehicle.color());
-        prep.setInt(7, vehicle.odometer());
-        prep.setDouble(8, vehicle.price());
+        prep.setString(1, vehicle.getVin());
+        prep.setString(2, vehicle.getMake());
+        prep.setString(3, vehicle.getModel());
+        prep.setInt(4, vehicle.getYear());
+        prep.setString(5, vehicle.getType());
+        prep.setString(6, vehicle.getColor());
+        prep.setInt(7, vehicle.getMileage());
+        prep.setDouble(8, vehicle.getPrice());
     }
 
     private static Vehicle vehicleResultSet(ResultSet rs) throws SQLException {
         return new Vehicle(
                 rs.getString("VIN"),
-                rs.getString("Make"), rs.getString("Model"), rs.getInt("Year"),
+                rs.getString("Make"),
+                rs.getString("Model"),
                 rs.getString("Type"),
                 rs.getString("Color"),
+                rs.getInt("Year"),
                 rs.getInt("Mileage"),
                 rs.getDouble("Price"),
                 rs.getBoolean("Sold")
