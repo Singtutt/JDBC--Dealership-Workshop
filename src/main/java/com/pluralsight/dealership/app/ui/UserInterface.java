@@ -1,6 +1,5 @@
 package com.pluralsight.dealership.app.ui;
 
-
 import com.pluralsight.dealership.dao.LeaseContractDAO;
 import com.pluralsight.dealership.dao.SalesContractDAO;
 import com.pluralsight.dealership.dao.VehicleDAO;
@@ -8,10 +7,8 @@ import com.pluralsight.dealership.model.Vehicle;
 import com.pluralsight.dealership.model.contract.LeaseContract;
 import com.pluralsight.dealership.model.contract.SalesContract;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -229,6 +226,8 @@ public class UserInterface {
             Screens.mainMenuFlow();
         }
     }
+//    Contract View Menu User Prompts and Inputs
+
     public static void processNewLeaseContractRequest() {
         LeaseContract newLC = null;
         try {
