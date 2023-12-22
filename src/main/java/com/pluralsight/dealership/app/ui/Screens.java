@@ -172,10 +172,10 @@ public class Screens {
         String option = input.nextLine();
         switch (option) {
             case "1":
-                UserInterface.processNewSalesContractRequest();
+                UserInterface.processGetSalesContractsRequest(); // Need to create this method in SalesContractDAO
                 break;
             case "2":
-                UserInterface.processNewLeaseContractRequest();
+                UserInterface.processGetLeaseContractsRequest(); // Need to create this method in LeaseContractDAO
                 break;
             case "3":
                 UserInterface.processGetSCByID(); // Need to create this method in SalesContractDAO
