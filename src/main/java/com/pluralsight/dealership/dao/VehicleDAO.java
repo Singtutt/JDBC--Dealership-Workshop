@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleDAO {
-    public static List<Vehicle> byPrice(int lowest, int highest) {
+    public static List<Vehicle> byVIN(String vin) {
+        return sortBy("v.vin = ?", vin);
+    }
+    public static List<Vehicle> byPrice(double lowest, double highest) {
         return sortBy("v.price > ? AND v.price < ?", String.valueOf(lowest), String.valueOf(highest));
     }
     public static List<Vehicle> byMakeModel(String make, String model) {
@@ -26,10 +29,9 @@ public class VehicleDAO {
     public static List<Vehicle> byType(String type) {
         return sortBy("v.type = ?", type);
     }
-    private static List<Vehicle> allVehicles() {
+    public static List<Vehicle> allVehicles() {
         return sortBy("1 = 1");
     }
-
 
     private static List<Vehicle> sortBy(String condition, String... properties) {
         List<Vehicle> sortedVehicles = new ArrayList<>();
@@ -55,21 +57,22 @@ public class VehicleDAO {
         }
         return sortedVehicles;
     }
-    public void addNewVehicle(Vehicle vehicle) {
+    public static void addVehicle(Vehicle vehicle) {
         String query = """
-                INSERT INTO vehicles (VIN, Make, Model, Year, Type, Color, Mileage, Price)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO vehicles (VIN, Make, Model, Year, Type, Color, Mileage, Price, Sold)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
         try (Connection conn = DataConnect.getConnection();
              PreparedStatement prep = conn.prepareStatement(query)) {
             vehiclePreparedStatement(prep, vehicle);
+            prep.setBoolean(9, vehicle.isSold());
             prep.executeUpdate();
-            System.out.println("SUCCESS");
+            System.out.println("Vehicle added successfully!");
         } catch (SQLException e) {
-            sqlErrorHandling(e, "ENTRY | INSERT ERROR");
+            sqlErrorHandling(e, "Error while adding a new vehicle");
         }
     }
-    public void removeVehicle(String vin) {
+    public static void removeVehicle(String vin) {
         String query = """
                 DELETE FROM vehicles
                 WHERE VIN = ?""";

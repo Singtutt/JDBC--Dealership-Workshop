@@ -9,7 +9,6 @@ public class DataConnect {
     private static final String URL = "jdbc:mysql://localhost:3306/car_dealership";
     private static final String USER = "root";
     private static final String PASS = "password!";
-
     private static BasicDataSource dataSource;
 
     public static void sourceConnect() {
@@ -18,12 +17,7 @@ public class DataConnect {
         dataSource.setUsername(USER);
         dataSource.setPassword(PASS);
     }
-
     public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
-    }
-
-    public static void dataCloser() throws SQLException {
-        dataSource.close();
     }
 }

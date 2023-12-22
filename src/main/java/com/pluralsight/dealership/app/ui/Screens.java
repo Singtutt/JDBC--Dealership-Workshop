@@ -1,5 +1,8 @@
 package com.pluralsight.dealership.app.ui;
 
+import com.pluralsight.dealership.dao.LeaseContractDAO;
+import com.pluralsight.dealership.dao.SalesContractDAO;
+
 import java.util.Scanner;
 
 public class Screens {
@@ -16,7 +19,6 @@ public class Screens {
                             
                 User Input:\s""");
     }
-
     public static void vehicleMenuDisplay() {
         System.out.print("""
                 Vehicle Management:
@@ -28,7 +30,6 @@ public class Screens {
                             
                 User Input:\s""");
     }
-
     public static void salesMenuDisplay() {
         System.out.print("""
                 Sales Management:
@@ -40,7 +41,6 @@ public class Screens {
                             
                 User Input:\s""");
     }
-
     public static void inventoryMenuDisplay() {
         System.out.print("""
                 Display Inventory:
@@ -52,7 +52,6 @@ public class Screens {
                             
                 User Input:\s""");
     }
-
     public static void filterMenuDisplay() {
         System.out.print("""
                 Filter Cars:
@@ -68,7 +67,6 @@ public class Screens {
                             
                 User Input:\s""");
     }
-
     public static void modifyMenuDisplay() {
         System.out.print("""
                 Modify Inventory:
@@ -80,7 +78,6 @@ public class Screens {
                             
                 User Input:\s""");
     }
-
     public static void contractMenuDisplay() {
         System.out.print("""
                 New Contracts:
@@ -97,8 +94,8 @@ public class Screens {
                 Display Contracts:
                                 
                 Please enter a menu option (0-2):
-                \t1. All Sales Contracts
-                \t2. All Lease Contracts
+                \t1. All Sales Contract Entries
+                \t2. All Lease Contract Entries
                 \t3. Lease Contract Entry
                 \t4. Sales Contract Entry
                 \t0. Return to Sales Management
@@ -175,16 +172,16 @@ public class Screens {
         String option = input.nextLine();
         switch (option) {
             case "1":
-                // needs implimentation
+                UserInterface.processGetAllLeaseContracts();
                 break;
             case "2":
-                // needs implimentation
+                UserInterface.processGetAllLeaseContracts();
                 break;
             case "3":
-                // needs implimentation
+                UserInterface.processGetSCByID();
                 break;
             case "4":
-                // needs implimenation
+                UserInterface.processGetLCByID();
                 break;
             case "0":
                 salesMenuFlow();
@@ -195,8 +192,6 @@ public class Screens {
                 break;
         }
     }
-
-
     public static void inventoryMenuFlow() {
         inventoryMenuDisplay();
         String option = input.nextLine();
@@ -216,7 +211,6 @@ public class Screens {
                 break;
         }
     }
-
     public static void contractMenuFlow() {
         contractMenuDisplay();
         String option = input.nextLine();
@@ -236,7 +230,6 @@ public class Screens {
                 break;
         }
     }
-
     public static void filterMenuFlow() {
         String option = input.nextLine();
 
@@ -269,7 +262,6 @@ public class Screens {
 
         }
     }
-
     public static void modifyMenuFlow() {
         String option = input.nextLine();
         switch (option) {

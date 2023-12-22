@@ -89,4 +89,10 @@ public class Vehicle {
     public void setSold(boolean sold) {
         this.sold = sold;
     }
+
+    @Override
+    public String toString() {
+        return String.format(" %-17s | %-15s | %-15s | %-4d | %-15s | %-10s | %-7d | %10.2f | %-6s |%n",
+                vin, make, model, year, type, color, mileage, price, (sold ? "Yes" : "No"));
+    }
 }
