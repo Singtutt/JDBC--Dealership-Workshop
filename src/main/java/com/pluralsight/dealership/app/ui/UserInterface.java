@@ -20,7 +20,6 @@ import static com.pluralsight.dealership.dao.VehicleDAO.*;
 public class UserInterface {
     public static Scanner input = new Scanner(System.in);
     public static DecimalFormat df = new DecimalFormat("0.00");
-
     //  Filter Menu User Prompts and inputs.
     public static void processGetVehiclesByPriceRequest() {
         try {
@@ -42,7 +41,6 @@ public class UserInterface {
             processGetVehiclesByPriceRequest();
         }
     }
-
     public static void processGetVehiclesByMakeModelRequest() {
         try {
             System.out.print("\nPlease enter the vehicle make for your search: ");
@@ -63,7 +61,6 @@ public class UserInterface {
             processGetVehiclesByMakeModelRequest();
         }
     }
-
     public static void processGetVehiclesByYearRequest() {
         try {
             System.out.print("\nPlease enter the minimum year for your search: ");
@@ -84,7 +81,6 @@ public class UserInterface {
             processGetVehiclesByYearRequest();
         }
     }
-
     public static void processGetVehiclesByColorRequest() {
         try {
             System.out.print("\nPlease enter the vehicle color for your search: ");
@@ -102,7 +98,6 @@ public class UserInterface {
             processGetVehiclesByColorRequest();
         }
     }
-
     public static void processGetVehiclesByMileageRequest() {
         try {
             System.out.print("\nPlease enter the minimum mileage for your search: ");
@@ -122,7 +117,6 @@ public class UserInterface {
             processGetVehiclesByMileageRequest();
         }
     }
-
     public static void processGetVehiclesByTypeRequest() {
         try {
             System.out.print("\nPlease enter the vehicle type for your search: ");
@@ -140,14 +134,12 @@ public class UserInterface {
             processGetVehiclesByTypeRequest();
         }
     }
-
     public static void processGetAllVehiclesRequest() {
         System.out.println("\nList of All Vehicles: ");
         formatVehicles(allVehicles());
         System.out.println("\nReturning to the main menu...\n");
         Screens.mainMenuFlow();
     }
-
     //    Modify Menu User Prompts and Inputs
     public static void processAddVehicleRequest() {
         try {
@@ -178,7 +170,6 @@ public class UserInterface {
             Screens.mainMenuFlow();
         }
     }
-
     public static void processRemoveVehicleRequest() {
         try {
             List<Vehicle> VehicleList = allVehicles();
@@ -199,7 +190,6 @@ public class UserInterface {
             Screens.mainMenuFlow();
         }
     }
-
     //    Contract Menu User Prompts and Inputs
     public static void processNewSalesContractRequest() {
         SalesContract newSC = null;
@@ -256,7 +246,6 @@ public class UserInterface {
             System.out.println("Returning to the main menu...");
             Screens.mainMenuFlow();
         } catch (Exception inputError) {
-            // Handle input errors and flow as per your application's logic
             System.out.println("\nThere has been an input error. Please review your chosen information and try again. ");
             Screens.mainMenuFlow();
         }
